@@ -96,7 +96,7 @@ class GUI(MethodsGUI):
                 os.path.dirname(os.path.abspath(__file__)))
                                   + '/Demo_Tool/v0.0.6_demo_scenario/DEMO_System.png')
         img = img.subsample(2, 2)
-        lab = Label(master=self.frames[2], image=img) \
+        lab = Label(master=self.frames[0], image=img) \
             .grid(column=0, columnspan=4, row=22, rowspan=40)
 
         self.mainloop()
