@@ -8,7 +8,8 @@ import numpy as np
 from threading import *
 import os
 import subprocess
-from program_files.Spreadsheet_Energy_System_Model_Generator import sesmg_main
+from program_files.preprocessing.Spreadsheet_Energy_System_Model_Generator \
+    import sesmg_main
 
 
 class demo_frame_class:
@@ -18,12 +19,18 @@ class demo_frame_class:
         print(demo_file)
         print(demo_results)
 
-        sesmg_main(scenario_file=demo_file,
-                   result_path=demo_results,
-                   num_threads=2,
-                   graph=False,
-                   results=False,
-                   plotly=True)
+        sesmg_main(
+            scenario_file=demo_file,
+            result_path=demo_results,
+            num_threads=2,
+            timeseries_prep=['none', 'none', 'none', 'none', 0],
+            graph=False,
+            criterion_switch=False,
+            xlsx_results=False,
+            console_results=False,
+            solver="cbc",
+            cluster_dh=False,
+            district_heating_path="")
 
     def monetary_demo_scenario(self):
         '''modifies financial demo scenario'''
@@ -34,27 +41,39 @@ class demo_frame_class:
 
         # WINDPOWER
         sheet = xfile["sources"]
-        sheet['K2'] = (int(self.entry_values['windpower'].get()))
-        sheet['L2'] = (int(self.entry_values['windpower'].get()))
+        sheet['I4'] = (int(self.entry_values['windpower'].get()))
+        sheet['J4'] = (int(self.entry_values['windpower'].get()))
         # PHOTOVOLTAICS
         sheet = xfile["sources"]
-        sheet['K3'] = (int(self.entry_values['photovoltaics'].get()))
-        sheet['L3'] = (int(self.entry_values['photovoltaics'].get()))
+        sheet['I3'] = (int(self.entry_values['photovoltaics'].get()))
+        sheet['J3'] = (int(self.entry_values['photovoltaics'].get()))
+        # SOLAR THERMAL
+        sheet = xfile["sources"]
+        sheet['I5'] = (int(self.entry_values['solarthermal'].get()))
+        sheet['J5'] = (int(self.entry_values['solarthermal'].get()))
         # BATTERY
         sheet = xfile["storages"]
-        sheet['G2'] = (int(self.entry_values['battery'].get()))
-        sheet['H2'] = (int(self.entry_values['battery'].get()))
+        sheet['N3'] = (int(self.entry_values['battery'].get()))
+        sheet['O3'] = (int(self.entry_values['battery'].get()))
         # CHP
         sheet = xfile["transformers"]
-        sheet['Q3'] = (int(self.entry_values['chp'].get()))
-        sheet['R3'] = (int(self.entry_values['chp'].get()))
+        sheet['L4'] = (int(self.entry_values['chp'].get()))
+        sheet['M4'] = (int(self.entry_values['chp'].get()))
+        # ASHP
+        sheet = xfile["transformers"]
+        sheet['L6'] = (int(self.entry_values['ASHP'].get()))
+        sheet['M6'] = (int(self.entry_values['ASHP'].get()))
+        # GCHP
+        sheet = xfile["transformers"]
+        sheet['L5'] = (int(self.entry_values['GCHP'].get()))
+        sheet['M5'] = (int(self.entry_values['GCHP'].get()))
         # THERMAL STORAGE
         sheet = xfile["storages"]
-        sheet['G3'] = (int(self.entry_values['thermal storage'].get()))
-        sheet['H3'] = (int(self.entry_values['thermal storage'].get()))
+        sheet['N4'] = (int(self.entry_values['thermal storage'].get()))
+        sheet['O4'] = (int(self.entry_values['thermal storage'].get()))
         # District Heating
         sheet = xfile["links"]
-        sheet['C2'] = (int(self.entry_values['district heating'].get()))
+        sheet['C3'] = (int(self.entry_values['district heating'].get()))
 
         xfile.save(self.mainpath + '/results/demo/financial/scenario.xlsx')
         self.execute_sesmg_DEMO(
@@ -225,14 +244,13 @@ class demo_frame_class:
 
         plt.show()
 
-    def __init__(self, window, tab_control, demo_frame):
+    def __init__(self, demo_frame, window):
         # Definition of the DEMO-Frames
         # main_frame = ttk.Frame(tab_control)
         self.mainpath = \
             os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 
         self.window = window
-        tab_control.add(demo_frame, text='DEMO')
         self.monetary_costs = StringVar()
         self.monetary_costs.set('--')
 
@@ -265,18 +283,24 @@ class demo_frame_class:
         demo_components = {"name": 'name',
                            "windpower": '0',
                            "photovoltaics": '0',
+                           "solarthermal": '0',
                            "battery": '0',
                            "chp": '0',
+                           "ASHP": '0',
+                           "GCHP": '0',
                            "thermal storage": '0',
                            "district heating": '0'}
         self.demo_components = demo_components
         self.demo_unit = {"name": '',
-                     "windpower": 'kW',
-                     "photovoltaics": 'kW',
-                     "battery": 'kWh',
-                     "chp": 'kW (el.)',
-                     "thermal storage": 'kWh',
-                     "district heating": 'True (1) / False (0)'}
+                          "windpower": 'kW',
+                          "photovoltaics": 'kW',
+                          "solarthermal": 'kW',
+                          "battery": 'kWh',
+                          "chp": 'kW (el.)',
+                          "ASHP": 'kW',
+                          "GCHP": 'kW',
+                          "thermal storage": 'kWh',
+                          "district heating": 'True (1) / False (0)'}
 
         row = row + 1
         self.demo_names = list(demo_components.keys())
@@ -437,7 +461,7 @@ class demo_frame_class:
         #
         #
         # EXECUTION BUTTONS
-        row = 15
+        row = 18
         Button(demo_frame, text='SAVE', command=self.save_manual_results)\
             .grid(column=1 + 4, row=row, pady=4)
         row = row + 1
