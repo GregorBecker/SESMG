@@ -15,7 +15,7 @@ import \
     program_files.postprocessing.merge_partial_results as merge_partial_results
 import program_files.postprocessing.plotting as plotting
 from program_files.preprocessing.create_energy_system import import_scenario
-import program_files.GUI_files.demo_tool as demo_tool
+import program_files.GUI_files.Demo_Tool.demo_tool as demo_tool
 
 
 def save_settings(gui_variables: dict):
