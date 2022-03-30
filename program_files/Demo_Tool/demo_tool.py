@@ -57,6 +57,7 @@ class demo_frame_class:
         sheet['O3'] = (int(self.entry_values['battery'].get()))
         # CHP
         sheet = xfile["transformers"]
+        sheet['C4'] = (int(self.entry_values["district heating"].get()))
         sheet['L4'] = (int(self.entry_values['chp'].get()))
         sheet['M4'] = (int(self.entry_values['chp'].get()))
         # ASHP
@@ -69,6 +70,7 @@ class demo_frame_class:
         sheet['M5'] = (int(self.entry_values['GCHP'].get()))
         # THERMAL STORAGE
         sheet = xfile["storages"]
+        sheet['C4'] = (int(self.entry_values["district heating"].get()))
         sheet['N4'] = (int(self.entry_values['thermal storage'].get()))
         sheet['O4'] = (int(self.entry_values['thermal storage'].get()))
         # District Heating
@@ -94,30 +96,43 @@ class demo_frame_class:
 
         xfile = openpyxl.load_workbook(os.path.dirname(__file__) +
             '/v0.0.6_demo_scenario/demo_scenario_emissionen.xlsx')
-
         # WINDPOWER
         sheet = xfile["sources"]
-        sheet['K2'] = (int(self.entry_values['windpower'].get()))
-        sheet['L2'] = (int(self.entry_values['windpower'].get()))
+        sheet['I4'] = (int(self.entry_values['windpower'].get()))
+        sheet['J4'] = (int(self.entry_values['windpower'].get()))
         # PHOTOVOLTAICS
         sheet = xfile["sources"]
-        sheet['K3'] = (int(self.entry_values['photovoltaics'].get()))
-        sheet['L3'] = (int(self.entry_values['photovoltaics'].get()))
+        sheet['I3'] = (int(self.entry_values['photovoltaics'].get()))
+        sheet['J3'] = (int(self.entry_values['photovoltaics'].get()))
+        # SOLAR THERMAL
+        sheet = xfile["sources"]
+        sheet['I5'] = (int(self.entry_values['solarthermal'].get()))
+        sheet['J5'] = (int(self.entry_values['solarthermal'].get()))
         # BATTERY
         sheet = xfile["storages"]
-        sheet['G2'] = (int(self.entry_values['battery'].get()))
-        sheet['H2'] = (int(self.entry_values['battery'].get()))
+        sheet['N3'] = (int(self.entry_values['battery'].get()))
+        sheet['O3'] = (int(self.entry_values['battery'].get()))
         # CHP
         sheet = xfile["transformers"]
-        sheet['Q3'] = (int(self.entry_values['chp'].get()))
-        sheet['R3'] = (int(self.entry_values['chp'].get()))
+        sheet['C4'] = (int(self.entry_values["district heating"].get()))
+        sheet['L4'] = (int(self.entry_values['chp'].get()))
+        sheet['M4'] = (int(self.entry_values['chp'].get()))
+        # ASHP
+        sheet = xfile["transformers"]
+        sheet['L6'] = (int(self.entry_values['ASHP'].get()))
+        sheet['M6'] = (int(self.entry_values['ASHP'].get()))
+        # GCHP
+        sheet = xfile["transformers"]
+        sheet['L5'] = (int(self.entry_values['GCHP'].get()))
+        sheet['M5'] = (int(self.entry_values['GCHP'].get()))
         # THERMAL STORAGE
         sheet = xfile["storages"]
-        sheet['G3'] = (int(self.entry_values['thermal storage'].get()))
-        sheet['H3'] = (int(self.entry_values['thermal storage'].get()))
+        sheet['C4'] = (int(self.entry_values["district heating"].get()))
+        sheet['N4'] = (int(self.entry_values['thermal storage'].get()))
+        sheet['O4'] = (int(self.entry_values['thermal storage'].get()))
         # District Heating
         sheet = xfile["links"]
-        sheet['C2'] = (int(self.entry_values['district heating'].get()))
+        sheet['C3'] = (int(self.entry_values['district heating'].get()))
 
         xfile.save(self.mainpath + '/results/demo/emissions/scenario.xlsx')
         self.execute_sesmg_DEMO(
@@ -145,11 +160,12 @@ class demo_frame_class:
 
     def include_optimized_scenarios(self):
         self.results_dict['Status Quo'] = \
-            [8.2594606, 18521.2, 0, 0, 0, 0, 0, 0]
+            [10.837808, 17222.180444, 0, 0, 0, 0, 0, 0]
         self.results_dict['Financial Minimum'] = \
-            [1.310668, 14400.430112, 29700, 10000, 0, 0, 0, 0]
+            [8.356600, 9613.589367, 10000, 0, 0, 0, 1367.69, 5000, 0, 0]
         self.results_dict['Emission Minimum'] = \
-            [9.825963, 12574.7, 5526, 644, 29680, 2769, 0, 10000]
+            [12.666614, 8272.763281, 10000, 1059.49, 10000, 0, 15847.01,
+             5000, 0, 0]
 
     def save_results(self):
 
@@ -281,7 +297,6 @@ class demo_frame_class:
         label_monetary_costs.grid(column=5, row=row)
 
         demo_components = {"name": 'name',
-                           "windpower": '0',
                            "photovoltaics": '0',
                            "solarthermal": '0',
                            "battery": '0',
@@ -292,7 +307,6 @@ class demo_frame_class:
                            "district heating": '0'}
         self.demo_components = demo_components
         self.demo_unit = {"name": '',
-                          "windpower": 'kW',
                           "photovoltaics": 'kW',
                           "solarthermal": 'kW',
                           "battery": 'kWh',
