@@ -39,10 +39,6 @@ class demo_frame_class:
                         + '/v0.0.6_demo_scenario/demo_scenario_monetaer.xlsx',
                                        data_only=True)
 
-        # WINDPOWER
-        sheet = xfile["sources"]
-        sheet['I4'] = (int(self.entry_values['windpower'].get()))
-        sheet['J4'] = (int(self.entry_values['windpower'].get()))
         # PHOTOVOLTAICS
         sheet = xfile["sources"]
         sheet['I3'] = (int(self.entry_values['photovoltaics'].get()))
@@ -96,10 +92,6 @@ class demo_frame_class:
 
         xfile = openpyxl.load_workbook(os.path.dirname(__file__) +
             '/v0.0.6_demo_scenario/demo_scenario_emissionen.xlsx')
-        # WINDPOWER
-        sheet = xfile["sources"]
-        sheet['I4'] = (int(self.entry_values['windpower'].get()))
-        sheet['J4'] = (int(self.entry_values['windpower'].get()))
         # PHOTOVOLTAICS
         sheet = xfile["sources"]
         sheet['I3'] = (int(self.entry_values['photovoltaics'].get()))
