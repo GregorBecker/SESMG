@@ -24,11 +24,11 @@ class demo_frame_class:
             result_path=demo_results,
             num_threads=2,
             timeseries_prep=['none', 'none', 'none', 'none', 0],
-            graph=False,
+            graph=True,
             criterion_switch=False,
             xlsx_results=False,
             console_results=False,
-            solver="cbc",
+            solver="gurobi",
             cluster_dh=False,
             district_heating_path="")
 
@@ -164,7 +164,7 @@ class demo_frame_class:
         self.results_dict['Financial Minimum'] = \
             [8.043211, 9221.384569, 10000, 0, 0, 0, 2070.6, 5000, 10000, 0, 0]
         self.results_dict['Emission Minimum'] = \
-            [12.767529, 7875.357848, 10000, 3360.32, 10000, 0, 17523.36,
+            [12.96770, 7653.872254, 10000, 6800, 10000, 0, 17523.36,
              5000, 10000, 0, 0]
 
     def save_results(self):
