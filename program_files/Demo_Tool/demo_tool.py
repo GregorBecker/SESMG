@@ -84,7 +84,7 @@ class demo_frame_class:
         self.monetary_costs.set(
             str(round(float(df_summary['Total System Costs']/1000000), 2)))
         self.emission_costs.set(
-            str(round(float(df_summary['Total Constraint Costs'])/1000000, 0)))
+            str(round(float(df_summary['Total Constraint Costs'])/1000000, 2)))
         self.window.update_idletasks()
 
     def emission_demo_scenario(self):
@@ -135,9 +135,9 @@ class demo_frame_class:
                                  + r"/results/demo/emissions/summary.csv")
 
         self.emission_costs.set(
-            str(round(float(df_summary['Total System Costs'])/1000000, 0)))
+            str(round(float(df_summary['Total System Costs'])/1000000, 2)))
         self.monetary_costs.set(
-            str(round(float(df_summary['Total Constraint Costs'])/1000000, 0)))
+            str(round(float(df_summary['Total Constraint Costs'])/1000000, 2)))
         self.window.update_idletasks()
 
     def simulate_scenario(self):
