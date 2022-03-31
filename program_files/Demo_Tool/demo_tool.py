@@ -24,11 +24,11 @@ class demo_frame_class:
             result_path=demo_results,
             num_threads=2,
             timeseries_prep=['none', 'none', 'none', 'none', 0],
-            graph=True,
+            graph=False,
             criterion_switch=False,
             xlsx_results=False,
             console_results=False,
-            solver="gurobi",
+            solver="cbc",
             cluster_dh=False,
             district_heating_path="")
 
