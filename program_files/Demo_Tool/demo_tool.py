@@ -490,17 +490,20 @@ class demo_frame_class:
         
         demo_assumptions = {
             'Electricity Demand': '14 000 000 kWh/a, h0 Load Profile',
-            'Heaty Demand': '52 203 000 kWh/a, EFH Load Profile',
-            'Windturbines': '2 000 000 €/MW, 8 g/kWh, 20 a, max. 29.7 MW',
-            'Photovoltaics': '1 140 000 €/MW, 56 g/kWh, 20 a, max. 10 MW',
-            'Battery': '1 000 000 €/MWh, 155 t/MWh (Invest!), 20 a',
-            'CHP': '190 000 €/MWh (el.), 375 g/kWh (el), 165 g/kWh (th.), '
-                   '20 a',
-            'Thermal Storage': '35 000 €/MWh, 46 g/kWh, 20 a, 3 % loss /d',
+            'Heat Demand': '52 203 000 kWh/a, EFH Load Profile',
+            #'Windturbines': '2 000 000 €/MW, 8 g/kWh, 20 a, max. 29.7 MW',
+            'Photovoltaics': '1 070 000 €/MW, 27 g/(kWh * a), 20 a, max. 10 MW',
+            'Solar Thermal': '  846 000 €/MW, 12 g/(kWh * a), 20 a, max. 6.8 MW',
+            'Battery': '1 000 000 €/MWh, 3.96 t/(kWh * a) (Invest!), 20 a',
+            'Gas Heating': '1 005 000 €/MW, 232g/(kWh * a), 18 a, 0.92',
+            'CHP': '760 000 €/MW (el.), 308 g/(kWh * a) (el), 265 g/(kWh * a) (th.), 20 a',
+            'Thermal Storage': '35 000 €/MWh, 743 g/(kWh * a), 20 a, 3 % loss /d',
             'district heating': '86 000 000 €, 15 % loss, 40 a',
-            'Gas Import/Heating': '6.4 ct/kWh (gas), 85 % efficiency, '
-                                  '45.62 g/kWh',
-            'Electricity Import': '30.5 ct/kWh, 474 g/kWh'
+            'Gas Import': '6.29 ct/kWh (gas)',
+            'Electricity Import': '31.22 ct/kWh, 366 g/kWh',
+            'Electricity Export': '- 6.8 ct/kWh, -27 g/kWh',
+            'Air Source Heat Pump': '1 318 000 €/MW, 12g/kWh, 18 a',
+            'Ground-coupled Heatpump': '1 444 000 €/MW, 8 g/kWh, 20 a'
             }
 
         assumption_keys = list(demo_assumptions.keys())
