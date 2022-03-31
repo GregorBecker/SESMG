@@ -152,7 +152,7 @@ class demo_frame_class:
 
     def include_optimized_scenarios(self):
         self.results_dict['Status Quo'] = \
-            [10.837808, 17222.180444, 0, 0, 0, 0, 0, 0]
+            [10.837808, 17222.180444, 0, 0, 0, 0, 0, 0, 0, 0]
         self.results_dict['Financial Minimum'] = \
             [8.356600, 9613.589367, 10000, 0, 0, 0, 1367.69, 5000, 0, 0]
         self.results_dict['Emission Minimum'] = \
@@ -467,7 +467,7 @@ class demo_frame_class:
         #
         #
         # EXECUTION BUTTONS
-        row = 18
+        row = 17
         Button(demo_frame, text='SAVE', command=self.save_manual_results)\
             .grid(column=1 + 4, row=row, pady=4)
         row = row + 1
