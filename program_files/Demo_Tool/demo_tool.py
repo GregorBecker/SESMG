@@ -69,6 +69,10 @@ class demo_frame_class:
         sheet['C4'] = (int(self.entry_values["district heating"].get()))
         sheet['N4'] = (int(self.entry_values['thermal storage'].get()))
         sheet['O4'] = (int(self.entry_values['thermal storage'].get()))
+        # THERMAL STORAGE
+        sheet = xfile["storages"]
+        sheet['N5'] = (int(self.entry_values['thermal storage (decentralized)'].get()))
+        sheet['O5'] = (int(self.entry_values['thermal storage (decentralized)'].get()))
         # District Heating
         sheet = xfile["links"]
         sheet['C3'] = (int(self.entry_values['district heating'].get()))
@@ -122,6 +126,10 @@ class demo_frame_class:
         sheet['C4'] = (int(self.entry_values["district heating"].get()))
         sheet['N4'] = (int(self.entry_values['thermal storage'].get()))
         sheet['O4'] = (int(self.entry_values['thermal storage'].get()))
+        # THERMAL STORAGE
+        sheet = xfile["storages"]
+        sheet['N5'] = (int(self.entry_values['thermal storage (decentralized)'].get()))
+        sheet['O5'] = (int(self.entry_values['thermal storage (decentralized)'].get()))
         # District Heating
         sheet = xfile["links"]
         sheet['C3'] = (int(self.entry_values['district heating'].get()))
@@ -152,12 +160,12 @@ class demo_frame_class:
 
     def include_optimized_scenarios(self):
         self.results_dict['Status Quo'] = \
-            [10.837808, 17222.180444, 0, 0, 0, 0, 0, 0, 0, 0]
+            [10.837808, 17222.180444, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         self.results_dict['Financial Minimum'] = \
-            [8.356600, 9613.589367, 10000, 0, 0, 0, 1367.69, 5000, 0, 0]
+            [8.043211, 9221.384569, 10000, 0, 0, 0, 2070.6, 5000, 10000, 0, 0]
         self.results_dict['Emission Minimum'] = \
-            [12.666614, 8272.763281, 10000, 1059.49, 10000, 0, 15847.01,
-             5000, 0, 0]
+            [12.767529, 7875.357848, 10000, 3360.32, 10000, 0, 17523.36,
+             5000, 10000, 0, 0]
 
     def save_results(self):
 
@@ -295,6 +303,7 @@ class demo_frame_class:
                            "chp": '0',
                            "ASHP": '0',
                            "GCHP": '0',
+                           'thermal storage (decentralized)': "0",
                            "thermal storage": '0',
                            "district heating": '0'}
         self.demo_components = demo_components
@@ -305,6 +314,7 @@ class demo_frame_class:
                           "chp": 'kW (el.)',
                           "ASHP": 'kW',
                           "GCHP": 'kW',
+                          'thermal storage (decentralized)': "kWh",
                           "thermal storage": 'kWh',
                           "district heating": 'True (1) / False (0)'}
 
@@ -467,7 +477,7 @@ class demo_frame_class:
         #
         #
         # EXECUTION BUTTONS
-        row = 17
+        row = 18
         Button(demo_frame, text='SAVE', command=self.save_manual_results)\
             .grid(column=1 + 4, row=row, pady=4)
         row = row + 1
@@ -500,8 +510,9 @@ class demo_frame_class:
             'Thermal Storage': '35 000 €/MWh, 743 g/(kWh * a), 20 a, 3 % loss /d',
             'district heating': '86 000 000 €, 15 % loss, 40 a',
             'Gas Import': '6.29 ct/kWh (gas)',
-            'Electricity Import': '31.22 ct/kWh, 366 g/kWh',
-            'Electricity Export': '- 6.8 ct/kWh, -27 g/kWh',
+            'Electricity Import': '31.22 ct/kWh, 366 g/kWh, '
+                                  'HEATPUMP: 22 ct/kWh, 366 g/kWh',
+            'Electricity Export': '- 6.8 ct/kWh, - 27 g/kWh',
             'Air Source Heat Pump': '1 318 000 €/MW, 12g/kWh, 18 a',
             'Ground-coupled Heatpump': '1 444 000 €/MW, 8 g/kWh, 20 a'
             }
