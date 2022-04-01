@@ -504,7 +504,7 @@ class demo_frame_class:
             #'Windturbines': '2 000 000 €/MW, 8 g/kWh, 20 a, max. 29.7 MW',
             'Photovoltaics': '1 070 000 €/MW, 27 g/(kWh * a), 20 a, max. 10 MW',
             'Solar Thermal': '  846 000 €/MW, 12 g/(kWh * a), 20 a, max. 6.8 MW',
-            'Battery': '1 000 000 €/MWh, 3.96 t/(kWh * a) (Invest!), 20 a',
+            'Battery': '1 000 000 €/MWh, 3.96 kg/(kWh * a) (Invest!), 20 a',
             'Gas Heating': '1 005 000 €/MW, 232g/(kWh * a), 18 a, 0.92',
             'CHP': '760 000 €/MW (el.), 308 g/(kWh * a) (el), 265 g/(kWh * a) (th.), 20 a',
             'Thermal Storage': '35 000 €/MWh, 743 g/(kWh * a), 20 a, 3 % loss /d',
