@@ -508,7 +508,7 @@ class demo_frame_class:
             'Gas Heating': '1 005 000 €/MW, 232g/kWh, 18 a, 0.92',
             'CHP': '760 000 €/MW (el.), 308 g/kWh (el), 265 g/kWh (th.), 20 a',
             'Thermal Storage': '35 000 €/MWh, 743 g/(kWh * a), 20 a, 3 % loss /d',
-            'Thermal Storage (decentral)': '49 000 €/MWh,  604g/(kWh * a), 18 a, 3 % loss /d',
+            'Thermal Storage (decentral)': '49 000 €/MWh,  604g/(kWh * a), 20 a, 3 % loss /d',
             'district heating': '86 000 000 €, 15 % loss, 40 a',
             'Gas Import': '6.29 ct/kWh (gas)',
             'Electricity Import': '31.22 ct/kWh, 366 g/kWh, '
