@@ -74,7 +74,7 @@ run `$ sudo apt-get install graphviz`
 
 ### Project Status 
 [![Documentation Status](https://readthedocs.org/projects/spreadsheet-energy-system-model-generator/badge/?version=latest)](https://spreadsheet-energy-system-model-generator.readthedocs.io/en/latest/?badge=latest)
-[![Requirements Status](https://requires.io/github/chrklemm/SESMG/requirements.svg?branch=master)](https://requires.io/github/chrklemm/SESMG/requirements/?branch=master)
+[![Requirements Status](https://requires.io/github/chrklemm/SESMG/requirements.svg?tag=v0.2.0)](https://requires.io/github/chrklemm/SESMG/requirements/?tag=v0.2.0)
 [![Maintainability](https://api.codeclimate.com/v1/badges/d82c7d94f8f421db19ce/maintainability)](https://codeclimate.com/github/GregorBecker/SESMG/maintainability)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/GregorBecker/SESMG/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/GregorBecker/SESMG/?branch=master)
 [![codecov](https://codecov.io/gh/GregorBecker/SESMG/branch/master/graph/badge.svg?token=9UW00ZSDYC)](https://codecov.io/gh/GregorBecker/SESMG)
