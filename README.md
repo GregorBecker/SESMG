@@ -75,6 +75,12 @@ run `$ sudo apt-get install graphviz`
 ### Project Status 
 [![Documentation Status](https://readthedocs.org/projects/spreadsheet-energy-system-model-generator/badge/?version=latest)](https://spreadsheet-energy-system-model-generator.readthedocs.io/en/latest/?badge=latest)
 [![Requirements Status](https://requires.io/github/chrklemm/SESMG/requirements.svg?branch=master)](https://requires.io/github/chrklemm/SESMG/requirements/?branch=master)
+[![Maintainability](https://api.codeclimate.com/v1/badges/d82c7d94f8f421db19ce/maintainability)](https://codeclimate.com/github/GregorBecker/SESMG/maintainability)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/GregorBecker/SESMG/badges/quality-score.png?b=dev_open_district_upscaling)](https://scrutinizer-ci.com/g/GregorBecker/SESMG/?branch=master)
+[![codecov](https://codecov.io/gh/GregorBecker/SESMG/branch/master/graph/badge.svg?token=9UW00ZSDYC)](https://codecov.io/gh/GregorBecker/SESMG)
+[![Coverage Status](https://coveralls.io/repos/github/GregorBecker/SESMG/badge.svg?branch=master)](https://coveralls.io/github/GregorBecker/SESMG?branch=master)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/d82c7d94f8f421db19ce/test_coverage)](https://codeclimate.com/github/GregorBecker/SESMG/test_coverage)
+
 
 ### Examples
 Examples are stored in a separate GIT-Repository: https://github.com/chrklemm/SESMG_Examples.
