@@ -26,9 +26,9 @@ jobs:
       - name: Install Python dependencies
         run: |
           pip3 install -U setuptools wheel pip
-          pip3 install -r requirements.txt
           pipwin install gdal
           pipwin install fiona
+          pip3 install -r requirements.txt
           pip3 install py2exe
 
       - name: Build
