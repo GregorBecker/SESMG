@@ -19,8 +19,9 @@ jobs:
         run: |
           curl -L -O https://github.com/HDFGroup/hdf5/archive/refs/tags/hdf5-1_14_1-2.zip
           tar -xf hdf5-1_14_1-2.zip
+          cd hdf5-hdf5-1_14_1-2
+          cmake install 
           ls
-          cmake install hdf5
 
       - name: Check Python install
         run: |
