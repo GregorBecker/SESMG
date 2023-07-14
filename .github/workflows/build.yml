@@ -14,6 +14,10 @@ jobs:
         with:
           python-version: '3.9'
           architecture: x86
+          
+      - name: Install HDF5
+        run: |
+          choco install hdf5
 
       - name: Check Python install
         run: |
