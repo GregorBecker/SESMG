@@ -17,7 +17,7 @@ jobs:
           
       - name: Install HDF5
         run: |
-          curl -s https://api.github.com/HDFGroup/hdf5/releases/latest
+          curl -s https://github.com/HDFGroup/hdf5/archive/refs/tags/hdf5-1_14_1-2.zip
           cmake install hdf5
 
       - name: Check Python install
