@@ -20,10 +20,14 @@ jobs:
           curl -L -O https://github.com/HDFGroup/hdf5/archive/refs/tags/hdf5-1_14_1-2.zip
           tar -xf hdf5-1_14_1-2.zip
           REN "D:/a/SESMG/SESMG/hdf5-hdf5-1_14_1-2" "D:/a/SESMG/SESMG/hdf5"
-          ls
           cd hdf5
-          cmake install 
-          ls
+          mkdir build
+          cd build
+          cmake -G "Visual Studio 10" -DBUILD_TESTING:BOOL=ON -DHDF5_BUILD_TOOLS:BOOL=ON ..
+          cmake --build . --config Release
+          ctest . -C Release
+          cpack -C Release CPackConfig.cmake
+          HDF5-1.8.12-win32.exe
 
       - name: Check Python install
         run: |
