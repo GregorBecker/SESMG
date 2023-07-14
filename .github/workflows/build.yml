@@ -27,7 +27,8 @@ jobs:
           cmake --build . --config Release
           ctest . -C Release
           cpack -C Release CPackConfig.cmake
-          HDF5-1.14.1.2-win64.exe
+          ls
+          HDF5-1.14.1.2-win64.msi
 
       - name: Check Python install
         run: |
