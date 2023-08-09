@@ -61,16 +61,21 @@ if __name__ == '__main__':
         bundle_dir = Path(sys._MEIPASS)
     else:
         bundle_dir = Path(__file__).parent.parent
-    raise FutureWarning(bundle_dir)
+
+    if sys.platform == "darwin":
+        main_application_path = "/program_files/GUI_st/1_Main_Application.py"
+    elif sys.platform == "windows":
+        main_application_path = "\program_files\GUI_st\1_Main_Application.py"
+
     # Define the command to run the Streamlit application
     cmd = [
         "streamlit",
         "run",
-        str(bundle_dir) + "/program_files/GUI_st/1_Main_Application.py",
+        str(bundle_dir) + main_application_path,
         "--server.headless=True",
         "--global.developmentMode=False"
     ]
-
+    print(cmd)
     # Start the Streamlit subprocess and register termination function
     p = sp.Popen(cmd, stdout=sp.PIPE, stderr=sp.PIPE, stdin=sp.PIPE)
     atexit.register(kill_server, p)
