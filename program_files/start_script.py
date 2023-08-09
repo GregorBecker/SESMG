@@ -70,7 +70,7 @@ if __name__ == '__main__':
     ]
 
     # Start the Streamlit subprocess and register termination function
-    p = sp.Popen(cmd, stdout=sp.DEVNULL)
+    p = sp.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
     atexit.register(kill_server, p)
 
     # Set the hostname and port for the Qt WebEngineView
