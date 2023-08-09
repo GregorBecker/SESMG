@@ -61,7 +61,7 @@ if __name__ == '__main__':
         bundle_dir = Path(sys._MEIPASS)
     else:
         bundle_dir = Path(__file__).parent.parent
-
+    raise FutureWarning(bundle_dir)
     # Define the command to run the Streamlit application
     cmd = [
         "streamlit",
