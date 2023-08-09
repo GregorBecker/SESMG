@@ -1,0 +1,35 @@
+name: Build Executables
+on: push
+
+jobs:
+  windows:
+      name: Build on windows
+      runs-on: windows-latest
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v2
+
+        - name: Setup Python
+          uses: actions/setup-python@v4
+          with:
+            python-version: '3.9.13'
+            
+        - name: Add msbuild to PATH
+          uses: microsoft/setup-msbuild@v1.1
+
+        - name: Create Executable
+          run: |
+            python3 -m venv .
+            Scripts/activate.bat
+            Scripts/pip3 install --upgrade setuptools
+            Scripts/pip3 install pyinstaller
+            Scripts/pip3 install twisted[tls] appnope requests certifi
+            Scripts/pip3 install -r requirements.txt  
+            Scripts/pyinstaller .github/deploy/SESMG_windows.spec
+            
+        - name: Upload Artifact
+          uses: actions/upload-artifact@v2
+          with:
+            name: SESMG.exe
+            path: |
+              dist/SESMG.exe
