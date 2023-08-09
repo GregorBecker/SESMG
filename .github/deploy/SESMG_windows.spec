@@ -33,6 +33,7 @@ datas = [('../../lib/site-packages/streamlit', 'streamlit'),
          ('../../lib/site-packages/windpowerlib', 'windpowerlib'),
          ('../../lib/site-packages/open_FRED', 'open_FRED'),
 	 ('../../lib/site-packages/xlsxwriter', 'xlsxwriter'),
+  	 ('../../lib/site-packages/graphviz', 'graphviz'),
          ('../../docs', 'docs'),
          ('../../README.md', '.'),
          ]
