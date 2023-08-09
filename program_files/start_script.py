@@ -23,6 +23,8 @@ if getattr(sys, 'frozen', False) and sys.platform == 'darwin':
     # Set the path for Qt WebEngine locales
     os.environ["QTWEBENGINE_LOCALES_PATH"] = \
         str(Path(sys._MEIPASS)) + "/qtwebengine_locales"
+elif getattr(sys, 'frozen', False) and sys.platform == 'windows':
+    sys.path.append(str(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 
 def kill_server(p):
