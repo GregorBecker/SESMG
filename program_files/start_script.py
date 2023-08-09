@@ -23,7 +23,7 @@ if getattr(sys, 'frozen', False) and sys.platform == 'darwin':
     # Set the path for Qt WebEngine locales
     os.environ["QTWEBENGINE_LOCALES_PATH"] = \
         str(Path(sys._MEIPASS)) + "/qtwebengine_locales"
-elif getattr(sys, 'frozen', False) and sys.platform == 'windows':
+elif getattr(sys, 'frozen', False) and sys.platform == 'win32':
     sys.path.append(str(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 
@@ -64,7 +64,7 @@ if __name__ == '__main__':
 
     if sys.platform == "darwin":
         main_application_path = "/program_files/GUI_st/1_Main_Application.py"
-    elif sys.platform == "windows":
+    elif sys.platform == "win32":
         main_application_path = "\program_files\GUI_st\1_Main_Application.py"
 
     # Define the command to run the Streamlit application
