@@ -10,10 +10,8 @@ import matplotlib.pyplot as plt
 import streamlit
 import atexit
 import matplotlib
-from program_files.GUI_st import GUI_st_global_functions
 from streamlit.web import cli as stcli
 from pathlib import Path
-from PySide6 import QtCore, QtWebEngineWidgets, QtWidgets
 
 
 # Set environment variables for frozen macOS applications using Qt WebEngine
@@ -23,8 +21,14 @@ if getattr(sys, 'frozen', False) and sys.platform == 'darwin':
     # Set the path for Qt WebEngine locales
     os.environ["QTWEBENGINE_LOCALES_PATH"] = \
         str(Path(sys._MEIPASS)) + "/qtwebengine_locales"
+    sys.path.append(str(os.path.dirname(os.path.dirname(
+        os.path.abspath(__file__)))))
 elif getattr(sys, 'frozen', False) and sys.platform == 'win32':
-    sys.path.append(str(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+    sys.path.append(str(os.path.dirname(os.path.dirname(
+        os.path.abspath(__file__)))))
+    
+from PySide6 import QtCore, QtWebEngineWidgets, QtWidgets
+from program_files.GUI_st import GUI_st_global_functions
 
 
 def kill_server(p):
@@ -63,21 +67,28 @@ if __name__ == '__main__':
         bundle_dir = Path(__file__).parent.parent
 
     if sys.platform == "darwin":
-        main_application_path = "/program_files/GUI_st/1_Main_Application.py"
+        # Define the command to run the Streamlit application
+        cmd = [
+            "streamlit",
+            "run",
+            str(bundle_dir) + "/program_files/GUI_st/1_Main_Application.py",
+            "--server.headless=True",
+            "--global.developmentMode=False"
+        ]
     elif sys.platform == "win32":
-        main_application_path = "\program_files\GUI_st\1_Main_Application.py"
+        # Define the command to run the Streamlit application
+        cmd = [
+            "python",
+            "-m",
+            "streamlit",
+            "run",
+            str(bundle_dir) + "\\program_files\\GUI_st\\1_Main_Application.py",
+            "--server.headless=True",
+            "--global.developmentMode=False"
+        ]
 
-    # Define the command to run the Streamlit application
-    cmd = [
-        "streamlit",
-        "run",
-        str(bundle_dir) + main_application_path,
-        "--server.headless=True",
-        "--global.developmentMode=False"
-    ]
-    print(cmd)
     # Start the Streamlit subprocess and register termination function
-    p = sp.Popen(cmd, stdout=sp.PIPE, stderr=sp.PIPE, stdin=sp.PIPE)
+    p = sp.Popen(cmd, stdout=sp.DEVNULL)
     atexit.register(kill_server, p)
 
     # Set the hostname and port for the Qt WebEngineView
