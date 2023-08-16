@@ -2,34 +2,45 @@ name: Build Executables
 on: push
 
 jobs:
-  windows:
-      name: Build on windows
-      runs-on: windows-latest
-      steps:
-        - name: Checkout
-          uses: actions/checkout@v2
+  linux:
+    name: Build on linux
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
 
-        - name: Setup Python
-          uses: actions/setup-python@v4
-          with:
-            python-version: '3.9.13'
-            
-        - name: Add msbuild to PATH
-          uses: microsoft/setup-msbuild@v1.1
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9.13'
 
-        - name: Create Executable
-          run: |
-            python3 -m venv .
-            Scripts/activate.bat
-            Scripts/pip3 install --upgrade setuptools
-            Scripts/pip3 install pyinstaller
-            Scripts/pip3 install twisted[tls] appnope requests certifi
-            Scripts/pip3 install -r requirements.txt  
-            Scripts/pyinstaller .github/deploy/SESMG_windows.spec
-            
-        - name: Upload Artifact
-          uses: actions/upload-artifact@v2
-          with:
-            name: SESMG.exe
-            path: |
-              dist/SESMG.exe
+      - name: Create Executable
+        run: |
+          pip3 install virtualenv
+          python3 -m virtualenv .
+          . bin/activate
+          sudo apt-get update 
+          sudo apt-get install libc6
+          pip3 install --upgrade setuptools
+          pip3 install pyinstaller
+          pip3 install twisted[tls] appnope requests certifi
+          pip3 install -r requirements.txt  
+          pyinstaller .github/deploy/SESMG_linux.spec
+      - name: Prepare for deployment
+        run: |
+          sudo apt-get install ruby-dev build-essential && sudo gem i fpm -f
+          mkdir -p package/opt
+          mkdir -p package/usr/share/applications
+          mkdir -p package/usr/share/icons/hicolor/scalable/apps
+          cp -r dist/SESMG package/opt/SESMG
+          cp .github/deploy/SESMG.desktop package/usr/share/applications
+          find package/opt/SESMG -type f -exec chmod 644 -- {} +
+          find package/opt/SESMG -type d -exec chmod 755 -- {} +
+          find package/usr/share -type f -exec chmod 644 -- {} +
+          chmod +x package/opt/SESMG/SESMG
+          fpm -C package -s dir -t deb -n "SESMG" -v 0.1.0 -p dist/SESMG.deb
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: SESMG.deb
+          path: dist/SESMG.deb
