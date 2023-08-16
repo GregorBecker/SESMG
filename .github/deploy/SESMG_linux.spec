@@ -4,6 +4,7 @@ from PyInstaller.utils.hooks import copy_metadata
 datas = [("../../program_files", "program_files"),
 	 ('../../docs', 'docs'),
          ('../../README.md', '.'),
+	 ('../../lib/python3.9/site-packages/typing_extensions.py', '.')
          ]
 datas += copy_metadata('streamlit')
 
