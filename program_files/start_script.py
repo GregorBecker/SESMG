@@ -24,7 +24,7 @@ if getattr(sys, 'frozen', False) and sys.platform == 'darwin':
     #    str(Path(sys._MEIPASS)) + "/qtwebengine_locales"
     sys.path.append(str(os.path.dirname(os.path.dirname(
         os.path.abspath(__file__)))))
-
+os.chdir(os.path.dirname(__file__))
 from PySide2 import QtCore, QtWebEngineWidgets, QtWidgets
 
 if getattr(sys, 'frozen', False) and sys.platform == 'darwin':
@@ -103,8 +103,14 @@ if __name__ == '__main__':
     os.chdir(os.path.dirname(__file__))
 
     
-    if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
+    if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS') and sys.platform == "darwin":
         cmd = "python3.9 -m streamlit run {} --server.headless=True".format(
+            "./program_files/GUI_st/1_Main_Application.py")
+    elif getattr(sys, 'frozen', False) and sys.platform == "win32":
+        cmd = "python -m streamlit run {} --server.headless=True --global.developmentMode=False --server.enableXsrfProtection=false".format(
+            "program_files\\GUI_st\\1_Main_Application.py")
+    elif getattr(sys, 'frozen', False) and sys.platform == "linux":
+        cmd = "python3.9 -m streamlit run {} --server.headless=True --global.developmentMode=False --server.enableXsrfProtection=false".format(
             "./program_files/GUI_st/1_Main_Application.py")
     else:
         cmd = "streamlit run {} --server.headless=True".format(
