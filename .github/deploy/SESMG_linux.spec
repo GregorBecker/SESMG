@@ -1,11 +1,15 @@
 # -*- mode: python ; coding: utf-8 -*-
 from PyInstaller.utils.hooks import copy_metadata
 
-datas = [("../../program_files", "program_files"),
+datas = [('../../program_files','program_files'),
 	 ('../../docs', 'docs'),
          ('../../README.md', '.'),
-	 ('../../lib/python3.9/site-packages/typing_extensions.py', '.')
-         ]
+	 ('../../lib/python3.9/site-packages/typing_extensions.py', '.'),
+	 ('../../lib/python3.9/site-packages/six.py', '.'),
+	 ('../../lib/python3.9/site-packages/memory_profiler.py', '.'),
+         ('../../lib/python3.9/site-packages/decorator.py', '.'),
+	 ('../../lib/python3.9/site-packages/cycler.py', '.'),
+	 ('../../lib/python3.9/site-packages/decouple.py', '.')]
 datas += copy_metadata('streamlit')
 
 
