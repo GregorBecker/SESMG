@@ -342,6 +342,34 @@ def show_pareto(result_path_pareto: str) -> None:
     st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
 
+def show_montecarlo(result_path_montecarlo: str) -> None:
+    """
+        Function to depict the results of the monte carlo
+        runs using a scatter plot.
+
+        :param result_path_montecarlo: path to a result \
+            montecarlo.csv file
+        :type result_path_montecarlo: str
+    """
+    # Header
+    st.subheader("Monte Carlo Diagram")
+
+    # load pareto.csv
+    montecarlo_df = pd.read_csv(result_path_montecarlo)
+    # create and show montecarlo plot
+    #px.scatter(a, x= "Kosten", y = "Emissionen")
+    fig = px.scatter(montecarlo_df,
+                  x="Kosten",
+                  y="Emissionen",
+                  #markers=True,
+                  #hover_data=["costs", "emissions"],
+                  labels={"Kosten": "costs (EUR / a)",
+                          "Emissionen": "emissions (g CO<sub>2</sub> / a)"}
+                  )
+    fig.update_traces(textposition="top right")
+    st.plotly_chart(fig, theme="streamlit", use_container_width=True)
+
+
 def short_result_graph(result_path_graph: str) -> None:
     """
         Function to display the energy systems structure in a streamlit
@@ -380,8 +408,10 @@ if st.session_state["state_result_path"] == "not set":
 # check if components.csv is in the result folder. Loading result page \
 # elements for a non-pareto run if so.
 elif os.path.join(st.session_state["state_result_path"], "components.csv") \
-        in glob.glob(st.session_state["state_result_path"] + "/*"):
-
+        in glob.glob(st.session_state["state_result_path"] + "/*") \
+        and \
+        os.path.join(st.session_state["state_result_path"], "montecarlo.csv") \
+        not in glob.glob(st.session_state["state_result_path"] + "/*"):
     # show short result summaries time series information
     short_result_summary_time(
         result_path_summary=st.session_state["state_result_path"]
@@ -478,3 +508,10 @@ elif os.path.join(st.session_state["state_result_path"], "components.csv") \
     short_result_graph(
         result_path_graph=st.session_state["state_pareto_result_path"]
         + "/graph.gv.png")
+
+elif os.path.join(st.session_state["state_result_path"], "guude.csv") \
+        in glob.glob(st.session_state["state_result_path"] + "/*"):
+    
+    show_montecarlo(
+        result_path_montecarlo=os.path.join(st.session_state["state_result_path"],
+                                        "montecarlo.csv"))
