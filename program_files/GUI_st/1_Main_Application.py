@@ -422,6 +422,26 @@ def main_input_sidebar() -> st.runtime.uploaded_file_manager.UploadedFile:
                 else:
                     GUI_main_dict["input_dh_folder"] = ""
 
+            # Input for monte carlo simulation
+            with st.expander("Monte Carlo Simulation"):
+            
+                input_montecarlo_number_of_runs = st.selectbox(
+                    label="Number of iterations",
+                    options=["Not set"] + list(range(10, 510, 10)),
+                    index=GUI_functions.index_montecarlo(mc_input=settings_cache_dict_reload[
+                        "input_montecarlo_number_of_runs"]),
+                    help=GUI_helper["montecarlo_number_of_iterations"])
+                input_montecarlo_section = st.slider(
+                label="Number of section",
+                min_value=1,
+                max_value=10,
+                value=settings_cache_dict_reload["input_montecarlo_section"],
+                help=GUI_helper["montecarlo_section"])
+                
+                
+                GUI_main_dict["input_montecarlo_number_of_runs"] = input_montecarlo_number_of_runs
+                GUI_main_dict["input_montecarlo_section"] = input_montecarlo_section
+
             # create criterion switch
             GUI_main_dict["input_criterion_switch"] = \
                 st.checkbox(
@@ -490,6 +510,19 @@ def main_error_definition() -> None:
 
     # reset session state
     st.session_state["state_submitted_optimization"] = "not done"
+
+
+def montecarlo_error_definition() -> None:
+    """
+        Raises a streamlit internal error if pareto run and
+        monte carlo simulation are set simultaneously
+        
+    """
+    # raise an error advice
+    st.error(body=GUI_helper["montecarlo_error_definition"], icon="🚨")
+
+    # reset session state
+    st.session_state["state_submitted_optimization"] = "not done"  
 
 
 def main_clear_cache_sidebar() -> None:
@@ -597,6 +630,13 @@ if st.session_state["state_submitted_optimization"] == "done":
         # load error messsage
         main_error_definition()
 
+    elif len(GUI_main_dict["input_pareto_points"]) != 0 and \
+    GUI_main_dict["input_montecarlo_number_of_runs"] != "Not set":
+        
+        # Raise error if pareto run and monte carlo simulation
+        # are set at the same time
+        montecarlo_error_definition()
+
     elif model_definition_input_file != "":
 
         # check rather the dependencies to be installed by the user are
@@ -617,19 +657,36 @@ if st.session_state["state_submitted_optimization"] == "done":
             # function to create the result pasths and store session state
             create_result_paths()
 
-            with st.spinner("Modeling in Progress..."):
+            if GUI_main_dict["input_montecarlo_number_of_runs"] != "Not set":
 
-                # start model run
-                GUI_functions.run_SESMG(
-                    GUI_main_dict=GUI_main_dict,
-                    model_definition=model_definition_input_file,
-                    save_path=GUI_main_dict["res_path"])
+                with st.spinner("Modeling in Progress..."):
+                    
+                    # start monte carlo run
+                    GUI_functions.run_SESMG_montecarlo(GUI_main_dict=GUI_main_dict,
+                              model_definition=model_definition_input_file,
+                              save_path=GUI_main_dict["res_path"])
+                     
+                    # save GUI settings in result folder and reset session state
+                    save_run_settings()
 
-                # save GUI settings in result folder and reset session state
-                save_run_settings()
+                # switch page after the model run completed
+                nav_page(page_name="Result_Processing", timeout_secs=3)
 
-            # switch page after the model run completed
-            nav_page(page_name="Result_Processing", timeout_secs=3)
+            else:
+
+                with st.spinner("Modeling in Progress..."):
+    
+                    # start model run
+                    GUI_functions.run_SESMG(
+                        GUI_main_dict=GUI_main_dict,
+                        model_definition=model_definition_input_file,
+                        save_path=GUI_main_dict["res_path"])
+    
+                    # save GUI settings in result folder and reset session state
+                    save_run_settings()
+    
+                # switch page after the model run completed
+                nav_page(page_name="Result_Processing", timeout_secs=3)
 
         # Starting a pareto modeul rum
         elif len(GUI_main_dict["input_pareto_points"]) != 0:
