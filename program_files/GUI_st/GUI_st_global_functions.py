@@ -10,9 +10,10 @@ import sys
 from pathlib import Path
 from PIL import Image
 import streamlit as st
+import random
 
 from program_files.preprocessing.Spreadsheet_Energy_System_Model_Generator \
-    import sesmg_main, sesmg_main_including_premodel
+    import sesmg_main, sesmg_main_including_premodel, sesmg_main_montecarlo
 
 
 def get_bundle_dir() -> str:
@@ -251,6 +252,72 @@ def run_SESMG(GUI_main_dict: dict,
             investment_boundaries=GUI_main_dict["input_premodeling_invest_boundaries"],
             investment_boundary_factor=GUI_main_dict["input_premodeling_tightening_factor"],
             graph=False)
+
+
+def run_SESMG_montecarlo(GUI_main_dict: dict,
+              model_definition: str,
+              save_path: str) -> None:
+    """
+        Function to run a Monte Carlo simulation via SESMG main based on 
+        the GUI input values dict.
+
+        :param GUI_main_dict: global defined dict of GUI input variables
+        :type GUI_main_dict: dict
+        :param model_definition: file path of the model definition to \
+            be optimized
+        :type model_definition: str
+        :param save_path: file path where the results will be saved
+        :type save_path: str
+    """
+    x=[]
+    y=[]
+    i = 0 
+    total_runs_montecarlo = GUI_main_dict["input_montecarlo_number_of_runs"]*10
+    random.seed(1)
+    
+    while i < total_runs_montecarlo:
+        
+        try:
+    
+            # prepare timeseries parameter list
+            timeseries_prep_parameter_list = \
+                ["input_timeseries_algorithm", "input_timeseries_cluster_index",
+                 "input_timeseries_criterion", "input_timeseries_period"]
+
+            # create timeseries parameter list as an input variable for run_sesmg
+            timeseries_prep = create_timeseries_parameter_list(
+                GUI_main_dict=GUI_main_dict,
+                input_value_list=timeseries_prep_parameter_list,
+                input_timeseries_season="input_timeseries_season")
+
+            if not GUI_main_dict["input_activate_premodeling"]:
+
+                sesmg_main_montecarlo(
+                    model_definition_file=model_definition,
+                    result_path=save_path,
+                    num_threads=GUI_main_dict["input_num_threads"],
+                    timeseries_prep=timeseries_prep,
+                    criterion_switch=GUI_main_dict["input_criterion_switch"],
+                    xlsx_results=GUI_main_dict["input_xlsx_results"],
+                    console_results=GUI_main_dict["input_console_results"],
+                    solver=GUI_main_dict["input_solver"],
+                    district_heating_path=GUI_main_dict["input_dh_folder"],
+                    cluster_dh=GUI_main_dict["input_cluster_dh"],
+                    x=x, y=y, i=i, montecarlo_section_runs=GUI_main_dict["input_montecarlo_number_of_runs"],
+                    montecarlo_section=GUI_main_dict["input_montecarlo_section"])
+                
+                i+=1
+
+            # If pre-modeling is activated a second run will be carried out
+            else:
+                print("Pre-modeling with monte carlo currently not supported.")
+                break
+
+            
+        except:
+            continue
+            
+    print("Fertig gelaufen")
 
 
 def read_markdown_document(document_path: str, folder_path: str,
@@ -633,3 +700,11 @@ def create_result_directory() -> None:
     if os.path.exists(result_directory_path) is False:
         # Create the results directory if it doesn't exist
         os.makedirs(result_directory_path)
+
+
+def index_montecarlo(mc_input):
+    if mc_input != "Not set":
+        return int(mc_input/10)
+    
+    else:
+        return 0
